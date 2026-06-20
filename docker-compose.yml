@@ -24,7 +24,7 @@ services:
       DATABASE_URL: "postgresql://postgres:postgres@db:5432/transfers?schema=public"
       PORT: 3000
       HOST: 0.0.0.0
-      REVIEW_THRESHOLD: 50000
+      REVIEW_THRESHOLD: 5000000
     ports:
       - "3000:3000"
 

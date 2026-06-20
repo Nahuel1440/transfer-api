@@ -7,7 +7,6 @@ import {
   TransactionParams,
   TransactionResponse,
 } from './schemas'
-import { centsToPesos, pesosToCents } from '../../domain/money'
 import type { TransactionView } from '../../application/transaction-view'
 import type { CreateTransaction } from '../../application/create-transaction.usecase'
 import type { ApproveTransaction } from '../../application/approve-transaction.usecase'
@@ -27,9 +26,9 @@ function toResponse(view: TransactionView) {
     id: tx.id,
     originId: tx.originId,
     destinationId: tx.destinationId,
-    amount: centsToPesos(tx.amount),
+    amount: tx.amount,
     status: tx.status,
-    balanceAfter: balanceAfter === null ? null : centsToPesos(balanceAfter),
+    balanceAfter,
     createdAt: tx.createdAt.toISOString(),
   }
 }
@@ -59,11 +58,7 @@ export const transactionRoutes: FastifyPluginAsyncTypebox<{ useCases: Transactio
     },
     async (request, reply) => {
       const { originId, destinationId, amount } = request.body
-      const view = await create.execute({
-        originId,
-        destinationId,
-        amountCents: pesosToCents(amount),
-      })
+      const view = await create.execute({ originId, destinationId, amountCents: amount })
       return reply.status(201).send(toResponse(view))
     },
   )

@@ -11,7 +11,6 @@ import { ListUserTransactions } from './application/list-user-transactions.useca
 import { registerSwagger } from './infrastructure/plugins/swagger'
 import { registerErrorHandler } from './infrastructure/http/error-handler'
 import { transactionRoutes } from './infrastructure/http/transaction.routes'
-import { pesosToCents } from './domain/money'
 
 export async function buildApp(): Promise<FastifyInstance> {
   const app = Fastify({ logger: true }).withTypeProvider<TypeBoxTypeProvider>()
@@ -22,7 +21,7 @@ export async function buildApp(): Promise<FastifyInstance> {
   })
 
   const uow = new PrismaUnitOfWork(prisma)
-  const reviewThresholdCents = pesosToCents(Number(process.env.REVIEW_THRESHOLD ?? 50_000))
+  const reviewThresholdCents = Number(process.env.REVIEW_THRESHOLD ?? 5_000_000)
 
   const useCases = {
     create: new CreateTransaction(uow, reviewThresholdCents),

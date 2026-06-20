@@ -4,9 +4,43 @@ Internal P2P payments API for virtual ARS accounts. Hexagonal architecture
 (`domain` / `application` / `ports` / `infrastructure`) on **Fastify 5 +
 TypeScript + Prisma 6 + PostgreSQL 16**.
 
-Money is stored in **cents** in the database; the HTTP API speaks **pesos**
-(e.g. `1500.50`).
 
+---
+
+## Data model
+
+```mermaid
+erDiagram
+    User ||--o{ Transaction : "sends (originId)"
+    User ||--o{ Transaction : "receives (destinationId)"
+    User ||--o{ LedgerEntry : "owns"
+    Transaction ||--o{ LedgerEntry : "produces"
+
+    User {
+        string id PK
+        string name
+        string email UK
+        int balance "cents"
+        datetime createdAt
+    }
+    Transaction {
+        string id PK
+        int amount "cents"
+        string originId FK
+        string destinationId FK
+        enum status "PENDING | APPROVED | REJECTED"
+        datetime createdAt
+        datetime updatedAt
+    }
+    LedgerEntry {
+        string id PK
+        int amount "signed cents (- debit / + credit)"
+        int balanceAfter "cents"
+        string userId FK
+        string transactionId FK
+        datetime createdAt
+    }
+```
 ---
 
 ## Run locally
