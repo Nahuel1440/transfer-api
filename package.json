@@ -1,0 +1,41 @@
+{
+  "name": "transfers-api",
+  "version": "1.0.0",
+  "description": "Internal P2P payments API for virtual ARS accounts (Fastify + Prisma + PostgreSQL)",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:migrate:dev": "prisma migrate dev --name init",
+    "seed": "tsx prisma/seed.ts",
+    "db:setup": "prisma migrate deploy && tsx prisma/seed.ts",
+    "smoke": "bash scripts/smoke-test.sh"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@fastify/swagger": "^9.7.0",
+    "@fastify/swagger-ui": "^6.0.0",
+    "@fastify/type-provider-typebox": "^6.1.0",
+    "@prisma/client": "^6.19.3",
+    "@sinclair/typebox": "^0.34.49",
+    "dotenv": "^17.4.2",
+    "fastify": "^5.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "prisma": "^6.19.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}
