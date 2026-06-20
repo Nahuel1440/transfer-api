@@ -4,7 +4,6 @@ Internal P2P payments API for virtual ARS accounts. Hexagonal architecture
 (`domain` / `application` / `ports` / `infrastructure`) on **Fastify 5 +
 TypeScript + Prisma 6 + PostgreSQL 16**.
 
-
 ---
 
 ## Data model
