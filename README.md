@@ -4,9 +4,6 @@ Internal P2P payments API for virtual ARS accounts. Hexagonal architecture
 (`domain` / `application` / `ports` / `infrastructure`) on **Fastify 5 +
 TypeScript + Prisma 6 + PostgreSQL 16**.
 
-Money is stored in **cents** in the database; the HTTP API speaks **pesos**
-(e.g. `1500.50`).
-
 ---
 
 ## Run locally
